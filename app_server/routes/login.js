@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var ctrlMain = require('../controllers/main');
+var ctrlInterface = require('../controllers/interface');
 
 /* GET login page. */
-router.get('/', ctrlMain.login); 
+router.get('/', ctrlInterface.login); 
         
 module.exports = router;
