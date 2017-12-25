@@ -5,7 +5,7 @@ var dbURI = "mongodb://localhost/users";
 
 // if heroku, access mlab db
 if (process.env.NODE_ENV === 'production') {
-    dbURI = 'mongodb://heroku_5vcxdf95:429mn7a7ih6h49a3qgliic9np@ds163806.mlab.com:63806/heroku_5vcxdf95';
+    dbURI = process.env.MONGOLAB_URI;
 }
 
 mongoose.connect(dbURI, { useMongoClient: true});
