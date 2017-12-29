@@ -6,7 +6,7 @@ const studentSchema = new mongoose.Schema({
     lastInit: { type: String, required: true },
     sounds: [String],
     sightWords: [String]
-});
+}, {_id : true });
 
 const userSchema = new mongoose.Schema({ 
     username: { type: String, required: true},

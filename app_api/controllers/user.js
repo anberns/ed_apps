@@ -1,12 +1,25 @@
 const mongoose = require('mongoose').set('debug',true);
 const User = mongoose.model('User');
 
-const userCreate = function (req, res) {
-    res
-        .status(200)
-        .json({"status" : "success"});
+const userCreate = (req, res) => {
+    User
+        .create({
+            username : req.body.username,
+            password : req.body.password
+        }, (err, userInfo) => {
+            if (err) {
+                res
+                    .status(400)
+                    .json(err);
+            } else {
+                res
+                    .status(200)
+                    .json(userInfo);
+            }
+        });
 };
-const userLogin = function (req, res) {
+
+const userLogin = (req, res) => {
     if (req.params && req.params.userid) {
         User
             .findById(req.params.userid)
@@ -37,7 +50,82 @@ const userLogin = function (req, res) {
     }
 };
 
+const updateUser = (req, res) => {
+    if (!req.params.userid) {
+        res
+            .status(404)
+            .json({
+                "message": "userid is required"
+            });
+        return;
+    }
+    User
+        .findById(req.params.userid)
+        .select('username password')
+        .exec((err, userInfo) => {
+            if (!userInfo)  {
+                 res
+                    .status(404)
+                    .json({
+                        "message": "userid not found"
+                    });
+                 return;
+            } else if (err) {
+                res
+                    .status(404)
+                    .json(err);
+                return;
+            }
+            if (req.body.username) {
+                userInfo.username = req.body.username;
+            }
+            if (req.body.password) {
+                userInfo.password = req.body.password;
+            }
+            userInfo.save((err, userInfo) => {
+                if (err) {
+                    res
+                        .status(404)
+                        .json(err);
+                } else {
+                    res
+                        .status(200)
+                        .json(userInfo);
+                }
+            });
+        });
+};
+
+const deleteUser = (req, res) => {
+    const userid = req.params.userid;
+    if (userid) {
+        User
+            .findById(userid)
+            .exec((err, userInfo) => {
+                User.remove((err, userInfo) => {
+                    if (err)  {
+                        res
+                            .status(404)
+                            .json(err);
+                        return;
+                    } 
+                    res
+                        .status(204)
+                        .json(null);
+                });
+            });
+    } else {
+        res
+            .status(404)
+            .json({
+                "message": "No userid in request"
+            });
+    }
+};
+
 module.exports = {
-    //userCreate,
-    userLogin
+    userCreate,
+    userLogin,
+    updateUser,
+    deleteUser
 };

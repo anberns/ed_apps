@@ -4,16 +4,18 @@ const ctrlUser = require('../controllers/user');
 const ctrlStudents = require('../controllers/students');
 
 // user
-/*
 router
     .route('/user')
-    .post(ctrlUser.userCreate);
-*/
+    .post(ctrlUser.userCreate)
+
 router
     .route('/user/:userid/login')
     .get(ctrlUser.userLogin);
-// update info route needed
-// delete user route needed
+
+router
+    .route('/user/:userid')
+    .put(ctrlUser.updateUser)
+    .delete(ctrlUser.deleteUser);
 
 // students
 router
@@ -23,6 +25,7 @@ router
 
 router
     .route('/user/:userid/students/:studentid')
+    .get(ctrlStudents.getStudent)
     .put(ctrlStudents.studentUpdate)
     .delete(ctrlStudents.studentDelete);
 
