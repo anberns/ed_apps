@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= title
+    ul(style='list-style-type:none')
+      each student, index in students
+        li 
+          form(action='/sOptions', method='post')
+            input(type= 'hidden', name= 'index', value= index)
+            input(name= 'student', type='submit', value = student.firstName + ' '
+            + student.lastInit)
+  br
+  form(action='/api/user/' + id + '/students', method='post')
+    fieldset
+      legend New Student
+      p
+        label(for='sName') First Name:
+          input(type='text', name='firstName')
+      p
+        label(for='lInit') Last Initial:
+          input(type='text', name='lastInit')
+      p
+        input(type='submit', name='newStudentSubmit', value='Add Student')

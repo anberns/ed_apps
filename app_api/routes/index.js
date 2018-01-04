@@ -9,8 +9,8 @@ router
     .post(ctrlUser.userCreate)
 
 router
-    .route('/user/:userid/login')
-    .get(ctrlUser.userLogin);
+    .route('/user/login')
+    .post(ctrlUser.userLogin);
 
 router
     .route('/user/:userid')
@@ -26,7 +26,7 @@ router
 router
     .route('/user/:userid/students/:studentid')
     .get(ctrlStudents.getStudent)
-    .put(ctrlStudents.studentUpdate)
+    .post(ctrlStudents.studentUpdate) //put?
     .delete(ctrlStudents.studentDelete);
 
 module.exports = router;

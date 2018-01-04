@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  if (alertFlag) 
+    script.
+      alert("Welcome! Please sign in.")
+  h1= title
+  form(action="/main", method="post")
+    fieldset
+      legend Registered Users 
+      p
+        lobel(for="user") Username:
+          input(type="text", name="user")
+      p
+        label(for="password") Password:
+          input(type="text", name="password")
+      p
+        input(type="submit", name="loginSubmit", value="Login")
+  br
+  form(action="/", method="post")
+    fieldset
+      legend New Users 
+      p
+        lobel(for="newuser") Username:
+          input(type="text", name="newuser")
+      p
+        label(for="newpassword") Password:
+          input(type="text", name="newpassword")
+      p
+         input(type="submit", name="signupSubmit", value="Sign Up")  

@@ -116,6 +116,7 @@ const studentCreate = (req, res) => {
                         .json(err);
                 } else {
                     _doAddStudent(req, res, userInfo);
+
                 }
             });
     } else {
@@ -157,6 +158,7 @@ const studentUpdate = function (req, res) {
             }
             if (userInfo.students && userInfo.students.length > 0) {
                 let thisStudent = userInfo.students.id(req.params.studentid);
+                console.log(thisStudent);
                 if (!thisStudent) {
                     res
                         .status(404)
@@ -175,9 +177,7 @@ const studentUpdate = function (req, res) {
                         thisStudent.sightWords = req.body.sightWords;
                     }
                     // collect, augment and save first
-                    if (req.body.sounds) {
-                        thisStudent.sounds = req.body.sounds;
-                    }
+                    thisStudent.sounds = _doUpdateSounds(req, res);
                     userInfo.save((err, studentInfo) => {
                         if (err) {
                             res
@@ -209,7 +209,7 @@ const studentDelete = function (req, res) {
         .exec((err, userInfo) => {
             if (!userInfo) {
                 res
-                    .status(200)
+                    .status(404)
                     .json({
                         "message" : "userid not found"
                     });
@@ -270,8 +270,8 @@ const _doAddStudent = (req, res, userInfo) => {
         userInfo.students.push({
             firstName : req.body.firstName,
             lastInit : req.body.lastInit,
-            sounds : req.body.sounds,
-            sightWords : req.body.sightWords,
+            //sounds : req.body.sounds,
+            //sightWords : req.body.sightWords,
         });
         userInfo.save((err, userInfo) => {
             if (err) {
@@ -282,8 +282,224 @@ const _doAddStudent = (req, res, userInfo) => {
                 let addedStudent = userInfo.students[userInfo.students.length -1];
                 res
                     .status(201)
-                    .json(addedStudent);
+                    .redirect('/studentAdded');
+                    //.json(addedStudent);
             }
         });
     }
 };
+
+// questionable solution, might need to preprocess data in controller
+// (Getting MEAN p. 242)
+// needs refactoring
+const _doUpdateSounds= (req, res) => {
+    let sounds = {
+        shortVowels : {
+            all : false,
+            a : false,
+            e : false,
+            i : false,
+            o : false,
+            u : false 
+        },
+        digraphs : {
+            all : false,
+            sh : false,
+            ch : false,
+            th : false,
+            wh : false,
+            ck : false 
+        },
+        longVowels : {
+            all : false,
+            a : false,
+            e : false,
+            i : false,
+            o : false,
+            u : false 
+        },
+        vowelTeams : {
+            all : false,
+            ea : false,
+            ee : false,
+            ai : false,
+            ei : false,
+            ie : false, 
+            oo : false,
+            ou : false,
+            au : false,
+            ui : false,
+            ue : false
+        },
+        diphs : {
+            all : false,
+            ow : false,
+            oy : false,
+            ey : false,
+            ew : false,
+            ay : false, 
+            aw : false
+        },
+        rCon : {
+            all : false,
+            ar : false,
+            er : false,
+            ir : false,
+            or : false,
+            ur : false 
+        }
+    };
+
+    // short vowels
+    if (req.body.allShort) {
+        sounds.shortVowels.all = true;
+    }
+    else {
+        if (req.body.shortA) {
+            sounds.shortVowels.a = true;
+        }
+        if (req.body.shortE) {
+            sounds.shortVowels.e = true;
+        }
+        if (req.body.shortI) {
+            sounds.shortVowels.i = true;
+        }
+        if (req.body.shortO) {
+            sounds.shortVowels.o = true;
+        }
+        if (req.body.shortU) {
+            sounds.shortVowels.u = true;
+        }
+    }
+    
+    // digraphs
+    if (req.body.allDigraphs) {
+        sounds.digraphs.all = true;
+    }
+    else {
+        if (req.body.ch) {
+            sounds.digraphs.ch = true;
+        }
+        if (req.body.sh) {
+            sounds.digraphs.sh = true;
+        }
+        if (req.body.th) {
+            sounds.digraphs.th = true;
+        }
+        if (req.body.wh) {
+            sounds.digraphs.th = true;
+        }
+        if (req.body.ck) {
+            sounds.digraphs.ck = true;
+        }
+    }
+
+    // long vowels
+    if (req.body.allLong) {
+        sounds.longVowels.all = true;
+    }
+    else {
+        if (req.body.a) {
+            sounds.longVowels.a = true;
+        }
+        if (req.body.e) {
+            sounds.longVowels.e = true;
+        }
+        if (req.body.i) {
+            sounds.longVowels.i = true;
+        }
+        if (req.body.o) {
+            sounds.longVowels.o = true;
+        }
+        if (req.body.u) {
+            sounds.longVowels.u = true;
+        }
+    }
+
+    // vowel teams
+    if (req.body.allTeams) {
+        sounds.vowelTeams.all = true;
+    }
+    else {
+        if (req.body.ea) {
+            sounds.vowelTeams.ea = true;
+        }
+        if (req.body.ee) {
+            sounds.vowelTeams.ee = true;
+        }
+        if (req.body.ai) {
+            sounds.vowelTeams.ai = true;
+        }
+        if (req.body.ei) {
+            sounds.vowelTeams.ei = true;
+        }
+        if (req.body.ie) {
+            sounds.vowelTeams.ie = true;
+        }
+        if (req.body.oo) {
+            sounds.vowelTeams.oo = true;
+        }
+        if (req.body.ou) {
+            sounds.vowelTeams.ou = true;
+        }
+        if (req.body.au) {
+            sounds.vowelTeams.au = true;
+        }
+        if (req.body.ui) {
+            sounds.vowelTeams.ui = true;
+        }
+        if (req.body.ue) {
+            sounds.vowelTeams.ue = true;
+        }
+    }
+
+    // Diphthongs 
+    if (req.body.allDiphs) {
+        sounds.diphs.all = true;
+    }
+    else {
+        if (req.body.ow) {
+            sounds.diphs.ow = true;
+        }
+        if (req.body.oy) {
+            sounds.diphs.oy = true;
+        }
+        if (req.body.ey) {
+            sounds.diphs.ey = true;
+        }
+        if (req.body.ew) {
+            sounds.diphs.ew = true;
+        }
+        if (req.body.ay) {
+            sounds.diphs.ay = true;
+        }
+        if (req.body.aw) {
+            sounds.diphs.aw = true;
+        }
+    }
+
+    // R-controlled 
+    if (req.body.allRCons) {
+        sounds.rCon.all = true;
+    }
+    else {
+        if (req.body.ar) {
+            sounds.rCon.ar = true;
+        }
+        if (req.body.er) {
+            sounds.rCon.er = true;
+        }
+        if (req.body.ir) {
+            sounds.rCon.ir = true;
+        }
+        if (req.body.or) {
+            sounds.rCon.or = true;
+        }
+        if (req.body.ur) {
+            sounds.rCon.ur = true;
+        }
+    }
+
+    return sounds;
+}
+

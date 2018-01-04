@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1 #{title} for #{name} 
+    ul(style='list-style-type:none')
+      li
+        form(action='/choices', method='post')
+          input(name='choice', type='submit', value='Rapid Exchange')
+      li
+        form(action='/choices', method='post')
+          input(name='choice', type='submit', value='Sight Word Practice')
+      li
+        form(action='/choices', method='post')
+          input(name='choice', type='submit', value='Edit Values')
+      li
+        form(action='/choices', method='post', onsubmit='return confirmSubmit();')
+          input(name='choice', type='submit', value='Delete Student')
+
+  h2 ID : #{userId} 
+  h2 Sounds : #{sounds}
+  h2 Sight Words : #{sightWords}
+
+  script.
+    function confirmSubmit() {
+      if(confirm("Delete #{name}?")){
+        return true;
+      } else {
+        return false;
+      }
+    }

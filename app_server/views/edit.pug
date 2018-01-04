@@ -1,0 +1,294 @@
+extends layout
+
+block content
+  h1= title
+  h2= sightWords
+  form(action='/api/user/' + userId + '/students/' + studentId, method='post')
+    fieldset
+      legend Sounds
+      p
+      input(type='checkbox', name='allShort', id='id')
+      label(for='allShort') All Short Vowels &nbsp
+      input(type='checkbox', name='shortA')
+      label(for='shortA') a &nbsp 
+      input(type='checkbox', name='shortE')
+      label(for='shortE') e &nbsp 
+      input(type='checkbox', name='shortI')
+      label(for='shortI') i &nbsp 
+      input(type='checkbox', name='shortO')
+      label(for='shortO') o &nbsp 
+      input(type='checkbox', name='shortU')
+      label(for='shortU') u &nbsp 
+      p
+      input(type='checkbox', name='allDigraphs')
+      label(for='allDigraphs') All Digraphs &nbsp
+      input(type='checkbox', name='ch')
+      label(for='ch') ch &nbsp 
+      input(type='checkbox', name='sh')
+      label(for='sh') sh &nbsp 
+      input(type='checkbox', name='th')
+      label(for='th') th &nbsp 
+      input(type='checkbox', name='wh')
+      label(for='wh') wh &nbsp 
+      input(type='checkbox', name='ck')
+      label(for='ck') ck &nbsp 
+      p
+      input(type='checkbox', name='allLong')
+      label(for='allLong') All Long Vowels &nbsp
+      input(type='checkbox', name='a')
+      label(for='a') a &nbsp 
+      input(type='checkbox', name='e')
+      label(for='e') e &nbsp 
+      input(type='checkbox', name='i')
+      label(for='i') i &nbsp 
+      input(type='checkbox', name='o')
+      label(for='o') o &nbsp 
+      input(type='checkbox', name='u')
+      label(for='u') u &nbsp 
+      p
+      input(type='checkbox', name='allTeams')
+      label(for='allTeams') All Vowel Teams &nbsp
+      input(type='checkbox', name='ea')
+      label(for='ea') ea &nbsp 
+      input(type='checkbox', name='ee')
+      label(for='ee') ee &nbsp 
+      input(type='checkbox', name='ai')
+      label(for='ai') ai &nbsp 
+      input(type='checkbox', name='ei')
+      label(for='ei') ei &nbsp 
+      input(type='checkbox', name='ie')
+      label(for='ie') ie &nbsp 
+      input(type='checkbox', name='oo')
+      label(for='oo') oo &nbsp 
+      input(type='checkbox', name='ou')
+      label(for='ou') ou &nbsp 
+      input(type='checkbox', name='au')
+      label(for='au') au &nbsp 
+      input(type='checkbox', name='ui')
+      label(for='ui') ui &nbsp 
+      input(type='checkbox', name='ue')
+      label(for='ue') ue &nbsp 
+      p
+      input(type='checkbox', name='allDiphs')
+      label(for='allDiphs') All Diphthongs &nbsp
+      input(type='checkbox', name='ow')
+      label(for='ow') ow &nbsp 
+      input(type='checkbox', name='oy')
+      label(for='oy') oy &nbsp 
+      input(type='checkbox', name='ey')
+      label(for='ey') ey &nbsp 
+      input(type='checkbox', name='ew')
+      label(for='ew') ew &nbsp 
+      input(type='checkbox', name='ay')
+      label(for='ay') ay &nbsp 
+      input(type='checkbox', name='aw')
+      label(for='aw') aw &nbsp 
+      p
+      input(type='checkbox', name='allRCon')
+      label(for='allRCon') All R-Contolled Vowels &nbsp
+      input(type='checkbox', name='ar')
+      label(for='ar') ar &nbsp 
+      input(type='checkbox', name='er')
+      label(for='er') er &nbsp 
+      input(type='checkbox', name='ir')
+      label(for='ir') ir &nbsp 
+      input(type='checkbox', name='or')
+      label(for='or') or &nbsp 
+      input(type='checkbox', name='ur')
+      label(for='ur') ur &nbsp 
+      p
+      input(type='submit', name='updateSubmit',value='Update')
+
+      script.
+        // check previously chosen sounds
+        // short vowels
+        if (#{sounds.shortVowels.all} === true) {
+          document.addEventListener("DOMContentLoaded", function(event) {
+            document.getElementsByName('allShort')[0].checked = true;
+          });
+        } else {
+          if(#{sounds.shortVowels.a} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('shortA')[0].checked = true;
+            });
+          }
+          if(#{sounds.shortVowels.e} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('shortE')[0].checked = true;
+            });
+          }
+          if(#{sounds.shortVowels.i} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('shortI')[0].checked = true;
+            });
+          }
+          if(#{sounds.shortVowels.o} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('shortO')[0].checked = true;
+            });
+          }
+          if(#{sounds.shortVowels.u} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('shortU')[0].checked = true;
+            });
+          }
+        }
+        // digraphs
+        if (#{sounds.digraphs.all} === true) {
+          document.addEventListener("DOMContentLoaded", function(event) {
+            document.getElementsByName('allDigraphs')[0].checked = true;
+          });
+        } else {
+          if(#{sounds.digraphs.ch} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ch')[0].checked = true;
+            });
+          }
+          if(#{sounds.digraphs.sh} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('sh')[0].checked = true;
+            });
+          }
+          if(#{sounds.digraphs.th} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('th')[0].checked = true;
+            });
+          }
+          if(#{sounds.digraphs.wh} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('wh')[0].checked = true;
+            });
+          }
+          if(#{sounds.digraphs.ck} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ck')[0].checked = true;
+            });
+          }
+        }
+        // vowel teams 
+        if (#{sounds.vowelTeams.all} === true) {
+          document.addEventListener("DOMContentLoaded", function(event) {
+            document.getElementsByName('allTeams')[0].checked = true;
+          });
+        } else {
+          if(#{sounds.vowelTeams.ea} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ea')[0].checked = true;
+            });
+          }
+          if(#{sounds.vowelTeams.ee} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ee')[0].checked = true;
+            });
+          }
+          if(#{sounds.vowelTeams.ai} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ai')[0].checked = true;
+            });
+          }
+          if(#{sounds.vowelTeams.ei} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ei')[0].checked = true;
+            });
+          }
+          if(#{sounds.vowelTeams.ie} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ie')[0].checked = true;
+            });
+          }
+          if(#{sounds.vowelTeams.oo} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('oo')[0].checked = true;
+            });
+          }
+          if(#{sounds.vowelTeams.ou} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ou')[0].checked = true;
+            });
+          }
+          if(#{sounds.vowelTeams.au} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('au')[0].checked = true;
+            });
+          }
+          if(#{sounds.vowelTeams.ui} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ui')[0].checked = true;
+            });
+          }
+          if(#{sounds.vowelTeams.ue} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ue')[0].checked = true;
+            });
+          }
+        }
+        // diphthongs
+        if (#{sounds.diphs.all} === true) {
+          document.addEventListener("DOMContentLoaded", function(event) {
+            document.getElementsByName('allDiphs')[0].checked = true;
+          });
+        } else {
+          if(#{sounds.diphs.ow} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ow')[0].checked = true;
+            });
+          }
+          if(#{sounds.diphs.oy} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('oy')[0].checked = true;
+            });
+          }
+          if(#{sounds.diphs.ey} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ey')[0].checked = true;
+            });
+          }
+          if(#{sounds.diphs.ew} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ew')[0].checked = true;
+            });
+          }
+          if(#{sounds.diphs.ay} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ay')[0].checked = true;
+            });
+          }
+          if(#{sounds.diphs.aw} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('aw')[0].checked = true;
+            });
+          }
+        }
+        // r-controlled 
+        if (#{sounds.rCon.all} === true) {
+          document.addEventListener("DOMContentLoaded", function(event) {
+            document.getElementsByName('allRCon')[0].checked = true;
+          });
+        } else {
+          if(#{sounds.rCon.ar} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ar')[0].checked = true;
+            });
+          }
+          if(#{sounds.rCon.er} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('er')[0].checked = true;
+            });
+          }
+          if(#{sounds.rCon.ir} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ir')[0].checked = true;
+            });
+          }
+          if(#{sounds.rCon.or} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('or')[0].checked = true;
+            });
+          }
+          if(#{sounds.rCon.ur} === true) {
+            document.addEventListener("DOMContentLoaded", function(event) {
+              document.getElementsByName('ur')[0].checked = true;
+            });
+          }
+        }
+

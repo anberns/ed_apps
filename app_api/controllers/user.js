@@ -13,22 +13,22 @@ const userCreate = (req, res) => {
                     .json(err);
             } else {
                 res
-                    .status(200)
+                    .status(201)
                     .json(userInfo);
             }
         });
 };
 
 const userLogin = (req, res) => {
-    if (req.params && req.params.userid) {
+    if (req.body.username && req.body.password) {
         User
-            .findById(req.params.userid)
+            .find({ 'username' : req.body.username})
             .exec((err, userInfo) => {
-                if (!userInfo)  {
+                if (!userInfo.length)  {
                     res
                         .status(404)
                         .json({
-                            "message": "userid not found"
+                            "message": "user not found"
                         });
                     return;
                 } else if (err) {
@@ -37,15 +37,25 @@ const userLogin = (req, res) => {
                         .json(err);
                     return;
                 }
-                res
-                    .status(200)
-                    .json(userInfo);
+                if (req.body.password === userInfo[0].password) {
+                    res
+                        .status(200)
+                        .json(userInfo);
+                } 
+                else {
+                    res
+                        .status(404)
+                        .json({
+                            "message" : "incorrect password"
+                        });
+                    return;
+                }
             });
     } else {
         res
             .status(404)
             .json({
-                "message": "No userid in request"
+                "message": "missing parameters"
             });
     }
 };
